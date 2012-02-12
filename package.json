@@ -1,0 +1,45 @@
+{ "name": "vimes"
+, "version": "0.0.1"
+, "engines": { "node": "~0.6" }
+, "homepage": "http://github.com/laurie71/vimes"
+, "keywords": [ "watch", "watcher", "watchhr", "monitor" ]
+, "description": "Commander of the Watch -- execute commands on filesystem changes"
+, "author": "Laurie Harper (http://laurie.holoweb.net/)"
+
+, "licenses":
+  { "type": "MIT"
+  , "url": "http://github.com/lharper71/vimes/raw/master/LICENSE.txt"
+  }
+
+, "repository": 
+  { "type": "git"
+  , "url": "git://github.com/laurie71/vimes.git"
+  }
+, "bugs":
+  { "url": "http://github.com/laurie71/vimes/issues"
+  }
+  
+, "main": "./index.js"
+, "directories":
+  { "doc": "./docs"
+  , "man": "./man"
+  , "lib": "./lib"
+  , "bin": "./bin"
+  }
+, "scripts": 
+  { "test": "mocha" 
+  , "prepublish": "make doc"
+  }
+
+, "dependencies":
+  { "colors"        : "*"
+  , "nopt"          : "*"
+  , "underscore"    : "*" 
+  }
+  
+, "devDependencies": 
+  { "gently"        : "*"
+  , "mocha"         : "*"
+  , "ronn"          : "*"
+  }
+}

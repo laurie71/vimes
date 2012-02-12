@@ -1,0 +1,73 @@
+#! /usr/bin/env node
+
+var watchfile = require('../lib/watchfile')
+  , Watchfile = watchfile.Watchfile
+  , fspath = require('path')
+  , colors = require('colors')
+  , nopt = require('nopt')
+  
+  , lopts = { 'debug'       : Boolean
+            , 'directory'   : fspath
+            , 'dry-run'     : Boolean
+            , 'help' : Boolean
+            , 'silent' : Boolean
+            , 'version' : Boolean
+            , 'watchfile' : fspath
+            }
+  , sopts = { 'C'   : ['--directory']
+            , 'd'   : ['--debug']
+            , 'f'   : [ '--watchfile' ]
+            , 'file': [ '--watchfile' ]
+            , 'h'   : [ '--help' ]
+            , 'n'   : ['--dry-run']
+            , 's'   : ['--silent']
+            , 'v'   : ['--version']
+            }
+            
+  , pkg = require('../package.json')
+  , version = ('v' + pkg.version).bold
+  , prog = fspath.basename(process.argv[1]).bold
+  , args = nopt(lopts, sopts, process.argv, 2)
+  , file = args.watchfile || watchfile.Watchfile.DEFAULT
+  , exit = false
+  
+// ------------------------------------------------------------------------
+
+// console.log('args:\n',args,'\n',args.argv.toString())
+
+if (args.version) {
+    console.info(prog, version)
+    exit = true
+}
+
+if (args.help) {
+    console.info(
+        [ prog + ' ' + version
+        , '  ' + pkg.description.italic
+        , ''
+        , 'usage: ' + prog + ' [options] ' + '[<watchfile>]'.grey
+        , ''
+        , 'Options:'
+        , ''
+// TODO        , '  -C, --directory DIRECTORY      Change to DIRECTORY before doing anything.'
+// TODO        , '  -d, --debug                    Print debugging information.'
+        , '  -f, --file, --watchfile FILE   Read FILE as watchfile.'
+        , '  -h, --help                     Print this message and exit.'
+// TODO        , '  -n, --dry-run                  Don\'t run any commands, just print them.'
+// TODO        , '  -s, --silent, --quiet          Don\'t echo commands.'
+        , '  -v, --version                  Print the version number of '+prog+' and exit'
+        , ''
+        ].join('\n'))
+    exit = true
+}
+
+if (exit) process.exit(0)
+
+// ------------------------------------------------------------------------
+
+var w = new watchfile.Watchfile(file)
+w.on('ready', function() { console.info('vimes: watching with '+w.file)})
+w.on('error', function(err) { console.error('vimes: error: ' + (err.message  || err)) })
+w.load()
+
+// ------------------------------------------------------------------------
