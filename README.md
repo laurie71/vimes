@@ -35,7 +35,7 @@ improve it; or think you've found a bug: post it to the [issue tracker][issues].
 ## License
 
 `vimes` is released under an MIT license; see
-[LICENSE.txt](./LICENSE.txt) for details.
+[LICENSE.txt](LICENSE.txt) for details.
 
 ---
 
